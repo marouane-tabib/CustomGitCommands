@@ -1,5 +1,13 @@
 # Custom Git Commands
+
 ## Installation
+
+### Prerequisites
+- Git
+- GitHub CLI (gh)
+- GitLab CLI (glab)
+
+### Windows Installation
 1. Move to the `C:/` folder.
 2. Run the following command to clone the repository:
     ```bash
@@ -7,10 +15,74 @@
     ```
 3. Navigate into the cloned repository:
     ```bash
-    CustomGitCommands
+    cd CustomGitCommands
     ```
-4. Click on the `downloader.cmd` file.
+4. Click on the `download.cmd` file.
 5. Configure Git with your name and email using the following command:
+    ```bash
+    git launch <user.name> <user.email>
+    ```
+
+### Linux/Ubuntu Installation
+
+#### Quick Installation (Recommended)
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/marouane-tabib/CustomGitCommands.git
+    ```
+2. Navigate into the cloned repository:
+    ```bash
+    cd CustomGitCommands
+    ```
+3. Run the installation script (installs dependencies and sets up aliases):
+    ```bash
+    bash download.sh
+    ```
+4. Configure Git with your name and email using the following command:
+    ```bash
+    git launch <user.name> <user.email>
+    ```
+
+#### Manual Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/marouane-tabib/CustomGitCommands.git
+    ```
+2. Navigate into the cloned repository:
+    ```bash
+    cd CustomGitCommands
+    ```
+3. Run the registration script:
+    ```bash
+    bash commands/register.sh
+    ```
+4. Configure Git with your name and email using the following command:
+    ```bash
+    git launch <user.name> <user.email>
+    ```
+
+### Alternative Installation (Manual)
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/marouane-tabib/CustomGitCommands.git
+    ```
+2. Move to installation directory:
+    ```bash
+    mkdir -p ~/.custom-git-commands
+    cp -r CustomGitCommands/* ~/.custom-git-commands/
+    ```
+3. Set environment variable (optional but recommended):
+    ```bash
+    export CUSTOM_GIT_COMMANDS_DIR="$HOME/.custom-git-commands"
+    echo 'export CUSTOM_GIT_COMMANDS_DIR="$HOME/.custom-git-commands"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+4. Register the git aliases:
+    ```bash
+    cd ~/.custom-git-commands/commands
+    ./register.sh
+    ```
+5. Configure Git with your name and email:
     ```bash
     git launch <user.name> <user.email>
     ```
