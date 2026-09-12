@@ -15,9 +15,9 @@ command_exists() {
 
 # Install Git if not present
 if ! command_exists git; then
-    echo "Installing Git..."
-    sudo apt update
-    sudo apt install -y git
+    echo "Git is not installed. Please install it manually:"
+    echo "sudo apt update && sudo apt install -y git"
+    exit 1
 else
     echo "Git is already installed"
 fi
@@ -28,7 +28,14 @@ if ! command_exists gh; then
     # Check distribution type and install accordingly
     if [ -f /etc/debian_version ]; then
         # Debian/Ubuntu
-        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        if command_exists curl; then
+            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        elif command_exists wget; then
+            wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        else
+            echo "Neither curl nor wget found. Please install one of them first."
+            exit 1
+        fi
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
         sudo apt update
         sudo apt install -y gh
@@ -52,7 +59,14 @@ if ! command_exists glab; then
         # Install from binary
         echo "Installing from binary..."
         TEMP_DIR=$(mktemp -d)
-        curl -L https://gitlab.com/gitlab-org/cli/-/releases/permalink/latest/downloads/bin/glab-linux-amd64 -o "$TEMP_DIR/glab"
+        if command_exists curl; then
+            curl -L https://gitlab.com/gitlab-org/cli/-/releases/permalink/latest/downloads/bin/glab-linux-amd64 -o "$TEMP_DIR/glab"
+        elif command_exists wget; then
+            wget -O "$TEMP_DIR/glab" https://gitlab.com/gitlab-org/cli/-/releases/permalink/latest/downloads/bin/glab-linux-amd64
+        else
+            echo "Neither curl nor wget found. Please install one of them first."
+            exit 1
+        fi
         chmod +x "$TEMP_DIR/glab"
         sudo mv "$TEMP_DIR/glab" /usr/local/bin/
         rm -rf "$TEMP_DIR"
