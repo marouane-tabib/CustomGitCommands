@@ -61,6 +61,7 @@ git config --global alias.to-prod "!\"$CUSTOM_GIT_COMMANDS_DIR/commands/actions/
     # Action - Services - LongWay
     git config --global alias.to-development to-dev
     git config --global alias.to-production to-prod
+    git config --global alias.finish to-prod
 
 # Action - Git - Comments
 git config --global alias.c  "!\"$CUSTOM_GIT_COMMANDS_DIR/commands/actions/git/gitCustomCommit.sh\""

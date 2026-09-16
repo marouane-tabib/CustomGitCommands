@@ -162,8 +162,13 @@ git setup-workflow
 ### Task's Interaction Options
 
 ##### Start New Task
+Default: creates an isolated git worktree for `<branch-name>` off `base` (sibling folder `<repo>-<branch-name>`) — good for parallel/agentic work.
 ```bash
 git start <branch-name|task-key>
+```
+Use `-b` to skip the worktree and just create/switch the branch in place, like before.
+```bash
+git start <branch-name|task-key> -b
 ```
 
 ##### Move Branch to Development
@@ -180,6 +185,20 @@ git to-prod <branch-name|task-key>
 ```
 ```bash
 git to-production <branch-name|task-key>
+```
+
+##### Finish a Task
+Default: rebases the worktree's branch onto `base` (clean linear history), fast-forwards `base`, pushes, then removes the worktree and branch.
+```bash
+git finish <branch-name|task-key>
+```
+Use `-s` for a soft finish — merge instead of rebase (still worktree-aware, keeps the branch's own commits and adds a merge commit).
+```bash
+git finish <branch-name|task-key> -s
+```
+Use `-b` for the classic in-place workflow (no worktree): runs the same chain as `to-prod` (`start` → `to-dev` → `to-prod`).
+```bash
+git finish -b <branch-name|task-key>
 ```
 
 ### Commit Options
